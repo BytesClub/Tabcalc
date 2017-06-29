@@ -1,5 +1,6 @@
 package com.example.mouri.tablayout;
 
+import android.support.v4.app.FragmentTransaction;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -24,17 +25,12 @@ import android.widget.Toast;
 import net.objecthunter.exp4j.Expression;
 import net.objecthunter.exp4j.ExpressionBuilder;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements Tab1.onSomeEventListener {
 
     //To store previous 5 operations
     String[] hist=new String[5];
     //To point to current operation in hist[]
     int histIndex=0;
-    //IDs of all numeric buttons
-    private int[] numBut={R.id.btnZero,R.id.btnOne,R.id.btnTwo,R.id.btnThree,R.id.btnFour,R.id.btnFive,R.id.btnSix,R.id.btnSeven,R.id.btnEight,R.id.btnNine,R.id.btnBracOpen,R.id.btnBracClose};
-
-    //IDs of all operation buttons
-    private int[] opBut={R.id.btnAdd,R.id.btnSubtract,R.id.btnMultiply,R.id.btnDivide,R.id.btnExpo};
 
     //Textview used to display the output
     private TextView txtScreen;
@@ -88,11 +84,17 @@ public class MainActivity extends AppCompatActivity {
         txtScreen.setText("");
         lastClear=true;
 
+        Fragment frag2 = new Fragment();
+        android.app.FragmentTransaction ft = getFragmentManager().beginTransaction() ;
+        ft.add(R.layout.tab1, frag2);
+        ft.commit();
         //Find and set OnClickListener to numeric buttons
-        setNumOnClickListener();
+        //setNumOnClickListener();
 
         //Find and set OnClickListener to operator buttons, equal to button and decimal button
-        setOpOnClickListener();
+        //setOpOnClickListener();
+
+        //recvValue();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -106,6 +108,12 @@ public class MainActivity extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+    }
+
+    @Override
+    public void someEvent(String s) {
+        android.app.Fragment frag1 = getFragmentManager().findFragmentById(R.layout.tab1);
+        ((TextView)frag1.getView().findViewById(R.id.txtScreen)).setText(s);
     }
 
     @Override
@@ -150,9 +158,6 @@ public class MainActivity extends AppCompatActivity {
                 case 1:
                     Tab2 tab2 = new Tab2();
                     return tab2;
-                case 2:
-                    Tab3 tab3 = new Tab3();
-                    return tab3;
             }
             return null;
         }
@@ -160,18 +165,16 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return 2;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "SECTION 1";
+                    return "NORMAL";
                 case 1:
-                    return "SECTION 2";
-                case 2:
-                    return "SECTION 3";
+                    return "SCIENTIFIC";
             }
             return null;
         }
@@ -212,63 +215,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    //Find and set OnClickListener to numeric buttons
-    private void setNumOnClickListener(){
-        //create a common OnClickListener
-        View.OnClickListener listener=new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                //just append/or set the text of clicked button
-                Button button=(Button)v;
-                if(stateError){
-                    //If current state is error, replace the error message
-                    txtScreen.setText(button.getText());
-                    stateError=false;
-                }else{
-                    //if no error, the entered expression is correct, so append to it
-                    if(lastClear || lastAns){
-                        txtScreen.setText("");
-                        lastClear=lastAns=false;
-                    }
-                    txtScreen.append(button.getText());
-                }
-                //set the flag
-                lastNumeric=true;
-            }
-        };
+    /*public void recvValue()
+    {
+        Bundle extras = getIntent().getExtras();
+        if (extras!=null) txtScreen.append(extras.getString("data"));
+    }*/
 
-        //assign listener to all numeric buttons
-        for (int id:numBut){
-            findViewById(id).setOnClickListener(listener);
-        }
-    }
 
-    //Find and set OnClickListener to operator buttons, equal button and decimal button
-    private void setOpOnClickListener(){
-        //create a common OnClickListener for all operators
-        View.OnClickListener listener=new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //if current state is error, do not append the operator, else append it
-                if(!stateError){
-                    Button button=(Button) v;
-                    if(!ans.equals("") && lastClear){
-                        txtScreen.setText("");
-                        txtScreen.append(ans);
-                        txtScreen.append(button.getText());
-                    }
-                    else txtScreen.append(button.getText());
-                    lastClear=lastAns=false;
-                    lastNumeric=false;
-                    lastDot=false; //resetting the dot flag
-                }
-            }
-        };
-
-        //assign listener to all operator buttons
-        /*for(int id:opBut){
-            findViewById(id).setOnClickListener(listener);
-        }*/
 
         //decimal point
         /*findViewById(R.id.btnDot).setOnClickListener(new View.OnClickListener() {
@@ -345,8 +298,8 @@ public class MainActivity extends AppCompatActivity {
                 if(trav<txtScreen.getMaxLines()-1)txtScreen.setText(vect.elementAt(++trav));
                 else trav=0;
             }
-        });*/
-    }
+        });
+    }*/
 /*
     private void onEqual(){
         //if the current state is an error, nothing to do.

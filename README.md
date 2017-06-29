@@ -14,6 +14,14 @@ To run the app,:
 * Check the gradle file. Some support libraries will be downloaded.
 * Go to Build -> Rebuild Project
 
+### Snapshots
+<table>
+    <tr>
+     <td><img src="/docs/Screenshot_2017-06-24-17-57-17-458_com.example.mouri.tablayout.png"></td>
+     <td><img src="/docs/Screenshot_2017-06-24-18-02-06-716_com.example.mouri.tablayout.png"></td>
+    </tr>
+</table>
+
 ### Contributing
 
 Read [this](https://bytesclub.github.io/contributing/)

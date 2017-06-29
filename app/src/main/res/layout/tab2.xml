@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!--<LinearLayout
+    <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_below="@+id/txtScreen"
@@ -286,6 +286,6 @@
             android:textSize="20sp" />
     </LinearLayout>
 
-</LinearLayout>-->
+</LinearLayout>
 
 </RelativeLayout>

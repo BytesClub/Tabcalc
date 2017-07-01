@@ -25,7 +25,7 @@ import android.widget.Toast;
 import net.objecthunter.exp4j.Expression;
 import net.objecthunter.exp4j.ExpressionBuilder;
 
-public class MainActivity extends AppCompatActivity implements Tab1.onSomeEventListener {
+public class MainActivity extends AppCompatActivity implements Tab1.onSomeEventListener, Tab2.onSomeEventListener2 {
 
     //To store previous 5 operations
     String[] hist=new String[5];
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements Tab1.onSomeEventL
         txtScreen.setText("");
         lastClear=true;
 
-        Fragment frag2 = new Fragment();
+        //Fragment frag2 = new Fragment();
         android.app.FragmentTransaction ft = getFragmentManager().beginTransaction() ;
         //ft.add(R.layout.tab1, frag2);
         ft.commit();
@@ -112,6 +112,14 @@ public class MainActivity extends AppCompatActivity implements Tab1.onSomeEventL
 
     @Override
     public void someEvent(String s) {
+        View v = findViewById(R.id.main_content);
+        if(v!=null) {
+            ((TextView) v.findViewById(R.id.txtScreen)).append(s);
+        }
+    }
+
+    @Override
+    public void someEvent2(String s) {
         View v = findViewById(R.id.main_content);
         if(v!=null) {
             ((TextView) v.findViewById(R.id.txtScreen)).append(s);

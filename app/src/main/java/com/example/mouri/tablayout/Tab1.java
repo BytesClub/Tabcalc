@@ -27,9 +27,6 @@ public class Tab1 extends Fragment{ //implements View.OnClickListener {
     //IDs of all operation buttons
     private int[] opBut = {R.id.btnAdd, R.id.btnSubtract, R.id.btnMultiply, R.id.btnDivide, R.id.btnExpo};
 
-    //To pass values to textbox
-    //Intent intent = new Intent(getActivity(), MainActivity.class);
-
     public interface onSomeEventListener {
         void someEvent(String s);
         void txtClear(boolean a);

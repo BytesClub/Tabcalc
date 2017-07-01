@@ -36,25 +36,25 @@ public class MainActivity extends AppCompatActivity implements Tab1.onSomeEventL
     private TextView txtScreen;
 
     //Represents whether the last pressed key is numeric or not
-    private boolean lastNumeric;
+    protected static boolean lastNumeric;
 
     //Represent that current state is in error or not
-    private boolean stateError;
+    protected static boolean stateError;
 
     //To check for only one dot in a number
-    private boolean lastDot;
+    protected static boolean lastDot;
 
     //To check if screen is cleared before next operation
-    private boolean lastClear;
+    protected static boolean lastClear;
 
     //To save the last calculated answer
-    private String ans="";
+    protected static String ans = "";
 
     //To save the last line of calculation
-    private String line="";
+    private String line = "";
 
     //To see if ans is obtained
-    private boolean lastAns;
+    protected static boolean lastAns;
 
     //To see if ans button is clicked or not
     private boolean ansclick;
@@ -136,11 +136,6 @@ public class MainActivity extends AppCompatActivity implements Tab1.onSomeEventL
     @Override
     public void equal(boolean a) {
         onEqual();
-    }
-
-    @Override
-    public String getAns() {
-        return ans;
     }
 
     @Override
@@ -331,10 +326,6 @@ public class MainActivity extends AppCompatActivity implements Tab1.onSomeEventL
     private void onEqual(){
         //if the current state is an error, nothing to do.
         //A solution can only be found if the last character is a number
-        stateError = Tab1.stateError;
-        lastNumeric = Tab1.lastNumeric;
-        lastDot = Tab1.lastDot;
-        lastAns = Tab1.lastAns;
         if(lastNumeric && !stateError){
             //read the expression
             String txt=txtScreen.getText().toString();
@@ -348,7 +339,6 @@ public class MainActivity extends AppCompatActivity implements Tab1.onSomeEventL
                 txtScreen.setText(Double.toString(result));
                 //String.format("%f",result);
                 ans = txtScreen.getText().toString();
-                Tab1.ans = ans;
                 lastDot=lastAns=true;
             }catch (ArithmeticException e){
                 //display an error message
@@ -356,10 +346,6 @@ public class MainActivity extends AppCompatActivity implements Tab1.onSomeEventL
                 stateError=true;
                 lastNumeric=false;
             }
-            Tab1.stateError = stateError;
-            Tab1.lastNumeric = lastNumeric;
-            Tab1.lastAns = lastAns;
-            Tab1.lastDot = lastDot;
             Toast.makeText(getApplicationContext(),"Please clear screen to continue to next operation",Toast.LENGTH_SHORT).show();
         }
     }

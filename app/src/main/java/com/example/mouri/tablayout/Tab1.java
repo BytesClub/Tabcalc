@@ -31,31 +31,35 @@ public class Tab1 extends Fragment{ //implements View.OnClickListener {
     private TextView txtScreen;
 
     //Represents whether the last pressed key is numeric or not
-    private boolean lastNumeric;
+    protected static boolean lastNumeric;
 
     //Represent that current state is in error or not
-    private boolean stateError;
+    protected static boolean stateError;
 
     //To check for only one dot in a number
-    private boolean lastDot;
+    protected static boolean lastDot;
 
     //To check if screen is cleared before next operation
-    private boolean lastClear;
+    protected static boolean lastClear;
 
     //To save the last calculated answer
-    private String ans = "";
+    protected static String ans = "";
 
     //To save the last line of calculation
     private String line = "";
 
     //To see if ans is obtained
-    private boolean lastAns;
+    protected static boolean lastAns;
 
     //To pass values to textbox
     //Intent intent = new Intent(getActivity(), MainActivity.class);
 
     public interface onSomeEventListener {
         public void someEvent(String s);
+        public void txtClear(boolean a);
+        public void erase(boolean a);
+        public String getAns();
+        public void equal(boolean a);
     }
 
     onSomeEventListener someEventListener;
@@ -78,6 +82,7 @@ public class Tab1 extends Fragment{ //implements View.OnClickListener {
 
         View myView = inflater.inflate(R.layout.tab1, null);
 
+        ans = someEventListener.getAns();
         //Setting listener on numbers
         for (int id : numBut) {
             myView.findViewById(id).setOnClickListener(new View.OnClickListener() {
@@ -87,6 +92,8 @@ public class Tab1 extends Fragment{ //implements View.OnClickListener {
                     if (stateError) {
                         //If current state is error, replace the error message
                         //txtScreen.setText(button.getText());
+                        someEventListener.txtClear(true);
+                        someEventListener.someEvent(button.getText().toString());
                         //Toast.makeText(getActivity(), button.getText(), Toast.LENGTH_SHORT).show();
                         /*intent.putExtra("data", button.getText());
                         startActivity(intent);*/
@@ -96,6 +103,7 @@ public class Tab1 extends Fragment{ //implements View.OnClickListener {
                         //if no error, the entered expression is correct, so append to it
                         if (lastClear || lastAns) {
                             //txtScreen.setText("");
+                            someEventListener.txtClear(true);
                             /*intent.putExtra("data", "");
                             startActivity(intent);*/
                             lastClear = lastAns = false;
@@ -117,12 +125,14 @@ public class Tab1 extends Fragment{ //implements View.OnClickListener {
                 public void onClick(View myView) {
                     Button button = (Button) myView;
                     if (!stateError) {
-                /*if (!ans.equals("") && lastClear) {
-                    txtScreen.setText("");
-                    txtScreen.append(ans);
-                    txtScreen.append(button1.getText());
-                } else txtScreen.append(button1.getText());*/
-                        Toast.makeText(getActivity(), button.getText(), Toast.LENGTH_SHORT).show();
+                if (!ans.equals("") && lastClear) {
+                    //txtScreen.setText("");
+                    someEventListener.txtClear(true);
+                    someEventListener.someEvent(ans);
+                    //txtScreen.append(ans);
+                    someEventListener.someEvent(button.getText().toString());
+                } else someEventListener.someEvent(button.getText().toString());;
+                        //Toast.makeText(getActivity(), button.getText(), Toast.LENGTH_SHORT).show();
                         lastClear = lastAns = false;
                         lastNumeric = false;
                         lastDot = false; //resetting the dot flag
@@ -138,7 +148,8 @@ public class Tab1 extends Fragment{ //implements View.OnClickListener {
                 Button button = (Button) myView;
                 if (lastNumeric && !stateError && !lastDot) {
                     //txtScreen.append(".");
-                    Toast.makeText(getActivity(), button.getText(), Toast.LENGTH_SHORT).show();
+                    someEventListener.someEvent(".");
+                    //Toast.makeText(getActivity(), button.getText(), Toast.LENGTH_SHORT).show();
                     lastNumeric = false;
                     lastDot = true;
                 }
@@ -151,7 +162,8 @@ public class Tab1 extends Fragment{ //implements View.OnClickListener {
             public void onClick(View myView) {
                 Button button = (Button) myView;
                 //txtScreen.setText("");//clears screen
-                Toast.makeText(getActivity(), button.getText(), Toast.LENGTH_SHORT).show();
+                someEventListener.txtClear(true);
+                //Toast.makeText(getActivity(), button.getText(), Toast.LENGTH_SHORT).show();
                 //reset all stages and flags
                 lastDot=false;
                 lastNumeric=false;
@@ -165,6 +177,7 @@ public class Tab1 extends Fragment{ //implements View.OnClickListener {
             @Override
             public void onClick(View myView) {
                 Button button = (Button) myView;
+                someEventListener.erase(true);
                 /*String txtInBox=txtScreen.getText().toString();
                 if(txtInBox.length()>0)txtInBox=txtInBox.substring(0,txtInBox.length()-1);
                 else txtInBox="";
@@ -173,69 +186,22 @@ public class Tab1 extends Fragment{ //implements View.OnClickListener {
             }
         });
 
+        myView.findViewById(R.id.btnEqual).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View myView) {
+                Button button = (Button) myView;
+                someEventListener.equal(true);
+            }
+        });
+
+        myView.findViewById(R.id.btnAns).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View myView) {
+                Button button = (Button) myView;
+                someEventListener.someEvent(ans);
+            }
+        });
         return myView;
 
     }
-
-    /*@Override
-    public void onClick(View v) {
-        //just append/or set the text of clicked button
-
-        boolean op = false; // To see if a numerical button is pressed
-
-        boolean num = false;// To see if an operational button is pressed
-
-        Integer id = new Integer(v.getId());
-        if (Arrays.asList(numBut).contains(id)) num = true;
-        else op = true;
-
-        Button button = (Button) v;
-
-        /*if (num) {
-            if (stateError) {
-                //If current state is error, replace the error message
-                //txtScreen.setText(button.getText());
-                Toast.makeText(getActivity(), button.getText(), Toast.LENGTH_SHORT).show();
-                /*intent.putExtra("data", button.getText());
-                startActivity(intent);
-                stateError = false;
-            } else {
-                //if no error, the entered expression is correct, so append to it
-                if (lastClear || lastAns) {
-                    //txtScreen.setText("");
-                    lastClear = lastAns = false;
-                }
-                Toast.makeText(getActivity(), button.getText(), Toast.LENGTH_SHORT).show();
-                //txtScreen.append(button.getText());
-            }
-            //set the flag
-            lastNumeric = true;
-        } else
-        if (op) {
-            if (!stateError) {
-                /*if (!ans.equals("") && lastClear) {
-                    txtScreen.setText("");
-                    txtScreen.append(ans);
-                    txtScreen.append(button1.getText());
-                } else txtScreen.append(button1.getText());
-                Toast.makeText(getActivity(), button.getText(), Toast.LENGTH_SHORT).show();
-                lastClear = lastAns = false;
-                lastNumeric = false;
-                lastDot = false; //resetting the dot flag
-            }
-        } else if (id == R.id.btnDot && lastNumeric && !stateError && !lastDot) {
-            //txtScreen.append(".");
-            Toast.makeText(getActivity(), button.getText(), Toast.LENGTH_SHORT).show();
-            lastNumeric = false;
-            lastDot = true;
-        } else if (id == R.id.btnClear && !lastClear) {
-            //txtScreen.setText("");//clears screen
-            Toast.makeText(getActivity(), button.getText(), Toast.LENGTH_SHORT).show();
-            //reset all stages and flags
-            lastDot = false;
-            lastNumeric = false;
-            stateError = false;
-            lastClear = true;
-        }
-    }*/
 }

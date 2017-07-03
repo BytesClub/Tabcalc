@@ -84,6 +84,9 @@ public class MainActivity extends AppCompatActivity implements Tab1.onSomeEventL
         txtScreen.setText("");
         lastClear=true;
 
+        //Toolbar tool = (Toolbar) findViewById(R.id.toolbar);
+        //tool.
+
         //Fragment frag2 = new Fragment();
         android.app.FragmentTransaction ft = getFragmentManager().beginTransaction() ;
         //ft.add(R.layout.tab1, frag2);

@@ -64,11 +64,11 @@ public class Tab1 extends Fragment{ //implements View.OnClickListener {
                         //If current state is error, replace the error message
                         //txtScreen.setText(button.getText());
                         someEventListener.txtClear(true);
-                        someEventListener.someEvent(button.getText().toString());
+                        someEventListener.someEvent(button.getText().toString()); ////***
                         //Toast.makeText(getActivity(), button.getText(), Toast.LENGTH_SHORT).show();
                         /*intent.putExtra("data", button.getText());
                         startActivity(intent);*/
-                        someEventListener.someEvent(button.getText().toString());
+                        someEventListener.someEvent(button.getText().toString()); ////***
                         MainActivity.stateError = false;
                     } else {
                         //if no error, the entered expression is correct, so append to it
@@ -85,6 +85,7 @@ public class Tab1 extends Fragment{ //implements View.OnClickListener {
                     }
                     //set the flag
                     MainActivity.lastNumeric = true;
+                    MainActivity.checkno=true;
                 }
             });
         }
@@ -95,19 +96,21 @@ public class Tab1 extends Fragment{ //implements View.OnClickListener {
                 @Override
                 public void onClick(View myView) {
                     Button button = (Button) myView;
-                    if (!MainActivity.stateError) {
-                if (!MainActivity.ans.equals("") && MainActivity.lastClear) {
-                    //txtScreen.setText("");
-                    someEventListener.txtClear(true);
-                    someEventListener.someEvent(MainActivity.ans);
-                    //txtScreen.append(ans);
-                    someEventListener.someEvent(button.getText().toString());
-                } else someEventListener.someEvent(button.getText().toString());;
-                        //Toast.makeText(getActivity(), button.getText(), Toast.LENGTH_SHORT).show();
-                        MainActivity.lastClear = MainActivity.lastAns = false;
-                        MainActivity.lastNumeric = false;
-                        MainActivity.lastDot = false; //resetting the dot flag
+                    if (!MainActivity.stateError)
+                    {
+                            if (!MainActivity.ans.equals("") && MainActivity.lastClear) {
+                                //txtScreen.setText("");
+                                someEventListener.txtClear(true);
+                                someEventListener.someEvent(MainActivity.ans);
+                                //txtScreen.append(ans);
+                                someEventListener.someEvent(button.getText().toString());
+                            } else someEventListener.someEvent(button.getText().toString());;
+                                //Toast.makeText(getActivity(), button.getText(), Toast.LENGTH_SHORT).show();
+                                MainActivity.lastClear = MainActivity.lastAns = false;
+                                MainActivity.lastNumeric = false;
+                                MainActivity.lastDot = false; //resetting the dot flag
                     }
+                    MainActivity.checkop=true;
                 }
             });
         }

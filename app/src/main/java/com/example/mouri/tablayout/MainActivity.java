@@ -59,6 +59,9 @@ public class MainActivity extends AppCompatActivity implements Tab1.onSomeEventL
     //To see if ans button is clicked or not
     private boolean ansclick;
 
+    protected static boolean checkno; //checks if operand is present
+    protected static boolean checkop; // checks if at least one operator is present
+
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -348,13 +351,18 @@ public class MainActivity extends AppCompatActivity implements Tab1.onSomeEventL
                 //String.format("%f",result);
                 ans = txtScreen.getText().toString();
                 lastDot=lastAns=true;
+                if(checkno && checkop) {
+                    Toast.makeText(getApplicationContext(), "Please clear screen to continue to next operation", Toast.LENGTH_SHORT).show();
+                    checkno=false;
+                    checkop=false;
+                }
             }catch (ArithmeticException e){
                 //display an error message
                 txtScreen.setText("Error");
                 stateError=true;
                 lastNumeric=false;
             }
-            Toast.makeText(getApplicationContext(),"Please clear screen to continue to next operation",Toast.LENGTH_SHORT).show();
+
         }
     }
 }

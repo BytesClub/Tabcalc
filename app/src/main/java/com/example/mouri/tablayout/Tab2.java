@@ -107,8 +107,8 @@ public class Tab2 extends Fragment{ //implements View.OnClickListener {
             @Override
             public void onClick(View myView) {
                 Button button = (Button) myView;
-                double p = Math.PI;
-                Double d = p;
+                double a = Math.PI;
+                Double d = a;
                 String s = d.toString();
                 someEventListener.someEvent2(s);
                 //txtScreen.setText("");//clears screen

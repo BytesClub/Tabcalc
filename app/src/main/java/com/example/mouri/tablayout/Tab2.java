@@ -102,6 +102,25 @@ public class Tab2 extends Fragment{ //implements View.OnClickListener {
             }
         });
 
+        //Setting listener on PI button
+        myView.findViewById(R.id.btnPi).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View myView) {
+                Button button = (Button) myView;
+                double p = Math.PI;
+                Double d = p;
+                String s = d.toString();
+                someEventListener.someEvent2(s);
+                //txtScreen.setText("");//clears screen
+                //someEventListener.txtClear(true);
+                //Toast.makeText(getActivity(), button.getText(), Toast.LENGTH_SHORT).show();
+                //reset all stages and flags
+                MainActivity.lastDot=false;
+                MainActivity.lastNumeric=false;
+                MainActivity.stateError=false;
+                MainActivity.lastClear=true;
+            }
+        });
         return myView;
     }
 }

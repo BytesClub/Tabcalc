@@ -176,6 +176,5 @@ public class Tab1 extends Fragment{ //implements View.OnClickListener {
             }
         });
         return myView;
-
     }
 }

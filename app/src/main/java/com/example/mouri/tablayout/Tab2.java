@@ -107,9 +107,7 @@ public class Tab2 extends Fragment{ //implements View.OnClickListener {
             @Override
             public void onClick(View myView) {
                 Button button = (Button) myView;
-                double a = Math.PI;
-                Double d = a;
-                String s = d.toString();
+                String s = String.format("%.9f", Math.PI);
                 someEventListener.someEvent2(s);
                 //txtScreen.setText("");//clears screen
                 //someEventListener.txtClear(true);

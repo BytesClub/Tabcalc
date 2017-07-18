@@ -32,6 +32,7 @@ public class Tab1 extends Fragment{ //implements View.OnClickListener {
         void txtClear(boolean a);
         void erase(boolean a);
         void equal(boolean a);
+        void prev(boolean a);
     }
 
     onSomeEventListener someEventListener;
@@ -119,7 +120,7 @@ public class Tab1 extends Fragment{ //implements View.OnClickListener {
         myView.findViewById(R.id.btnDot).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View myView) {
-                Button button = (Button) myView;
+                //Button button = (Button) myView;
                 if (MainActivity.lastNumeric && !MainActivity.stateError && !MainActivity.lastDot) {
                     //txtScreen.append(".");
                     someEventListener.someEvent(".");
@@ -134,7 +135,7 @@ public class Tab1 extends Fragment{ //implements View.OnClickListener {
         myView.findViewById(R.id.btnClear).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View myView) {
-                Button button = (Button) myView;
+                //Button button = (Button) myView;
                 //txtScreen.setText("");//clears screen
                 someEventListener.txtClear(true);
                 //Toast.makeText(getActivity(), button.getText(), Toast.LENGTH_SHORT).show();
@@ -150,20 +151,15 @@ public class Tab1 extends Fragment{ //implements View.OnClickListener {
         myView.findViewById(R.id.btnErase).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View myView) {
-                Button button = (Button) myView;
+                //Button button = (Button) myView;
                 someEventListener.erase(true);
-                /*String txtInBox=txtScreen.getText().toString();
-                if(txtInBox.length()>0)txtInBox=txtInBox.substring(0,txtInBox.length()-1);
-                else txtInBox="";
-                txtScreen.setText(txtInBox);*/
-
             }
         });
 
         myView.findViewById(R.id.btnEqual).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View myView) {
-                Button button = (Button) myView;
+                //Button button = (Button) myView;
                 someEventListener.equal(true);
             }
         });
@@ -171,8 +167,16 @@ public class Tab1 extends Fragment{ //implements View.OnClickListener {
         myView.findViewById(R.id.btnAns).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View myView) {
-                Button button = (Button) myView;
+                //Button button = (Button) myView;
                 someEventListener.someEvent(MainActivity.ans);
+            }
+        });
+
+        myView.findViewById(R.id.btnPrev).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View myView) {
+                //Button button = (Button) myView;
+                someEventListener.prev(true);
             }
         });
         return myView;

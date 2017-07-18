@@ -22,7 +22,7 @@ import java.util.Arrays;
 public class Tab2 extends Fragment{ //implements View.OnClickListener {
 
     //IDs of all numeric buttons
-    private int[] opBut = {R.id.btnASin, R.id.btnACos, R.id.btnATan, R.id.btnSin, R.id.btnCos, R.id.btnTan, R.id.btnSinh, R.id.btnCosh, R.id.btnCeil, R.id.btnFloor, R.id.btnSqrt};
+    private int[] opBut = {R.id.btnASin, R.id.btnACos, R.id.btnATan, R.id.btnSin, R.id.btnCos, R.id.btnTan, R.id.btnSinh, R.id.btnCosh, R.id.btnTanh, R.id.btnExp, R.id.btnCeil, R.id.btnFloor, R.id.btnSqrt, R.id.btnCbrt, R.id.btnLog, R.id.btnLog2, R.id.btnLog10};
 
     public interface onSomeEventListener2 {
         void someEvent2(String s);

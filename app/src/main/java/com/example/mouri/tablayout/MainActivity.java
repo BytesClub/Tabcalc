@@ -174,6 +174,15 @@ public class MainActivity extends AppCompatActivity implements Tab1.onSomeEventL
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void prev(boolean a) {
+        if(a){
+            if(histIndex < 0) histIndex = 5 + histIndex;
+            txtScreen.setText(hist[histIndex % 5]);
+            histIndex--;
+        }
+        a=false;
+    }
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
